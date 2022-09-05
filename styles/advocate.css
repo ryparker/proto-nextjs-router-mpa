@@ -1,0 +1,37 @@
+/* Font: Advocate base C43 */
+@font-face {
+  font-family: advocate_c43;
+  font-style: normal;
+  font-weight: 400;
+  font-stretch: normal;
+  src: url('../public/fonts/Advocate/Base/C43/advocate_c43_regular.woff2')
+    format('woff2');
+}
+@font-face {
+  font-family: advocate_c43;
+  font-style: normal;
+  font-weight: 600;
+  font-stretch: normal;
+  src: url('../public/fonts/Advocate/Base/C43/advocate_c43_bold.woff2')
+    format('woff2');
+}
+
+/* Font: Advocate mid C43 */
+@font-face {
+  font-family: advocate_c43_mid;
+  font-style: normal;
+  font-weight: 400;
+  font-stretch: normal;
+  src: url('../public/fonts/Advocate/Mid/C43/advocate_c43_mid_regular.woff2')
+    format('woff2');
+  /* font-display: swap; */
+}
+@font-face {
+  font-family: advocate_c43_mid;
+  font-style: normal;
+  font-weight: 600;
+  font-stretch: normal;
+  src: url('../public/fonts/Advocate/Mid/C43/advocate_c43_mid_bold.woff2')
+    format('woff2');
+  /* font-display: swap; */
+}

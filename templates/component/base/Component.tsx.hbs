@@ -1,0 +1,29 @@
+import React from 'react';
+import styled, {CSSProperties} from 'styled-components';
+
+export type {{name}}Props = {
+
+};
+
+const {{name}} = (props: {{name}}Props) => {
+  const { ...delegated } = props;
+  return (
+    <Wrapper
+      style={
+        {
+          '--prop-name': 'value'
+        } as CSSProperties
+      }
+      {...delegated}
+    >
+      {{name}}
+    </Wrapper>
+  );
+};
+
+const Wrapper = styled.div`
+
+`;
+
+
+export default {{name}};

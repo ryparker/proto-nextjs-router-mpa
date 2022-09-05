@@ -1,0 +1,71 @@
+{
+  "cSpell.words": ["svgs"],
+  "svg.preview.background": "transparent",
+  "importSorter.sortConfiguration.customOrderingRules.rules": [
+    {
+      "orderLevel": 1,
+      "regex": "^jest"
+    },
+    {
+      "orderLevel": 2,
+      "regex": "^react$"
+    },
+    {
+      "orderLevel": 3,
+      "regex": "^next"
+    },
+    {
+      "orderLevel": 4,
+      "regex": "^styled-components"
+    },
+    {
+      "orderLevel": 5,
+      "regex": "^@storybook/"
+    },
+    {
+      "orderLevel": 6,
+      "regex": "^@testing"
+    },
+    {
+      "orderLevel": 7,
+      "regex": "^@components/"
+    },
+    {
+      "orderLevel": 8,
+      "regex": "^@lib/"
+    },
+    {
+      "orderLevel": 9,
+      "regex": "^@hooks/"
+    },
+    {
+      "orderLevel": 10,
+      "regex": "^@utils/"
+    },
+    {
+      "orderLevel": 11,
+      "regex": "^@types$"
+    },
+    {
+      "orderLevel": 12,
+      "regex": "^@constants$"
+    },
+    {
+      "orderLevel": 13,
+      "regex": "^@styles/"
+    },
+    {
+      "orderLevel": 14,
+      "regex": "^[@]"
+    },
+    {
+      "orderLevel": 15,
+      "regex": "^[.]"
+    },
+    {
+      "orderLevel": 16,
+      "regex": "^$",
+      "type": "importMember"
+    }
+  ]
+}

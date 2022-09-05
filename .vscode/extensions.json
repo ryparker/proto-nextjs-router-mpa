@@ -1,0 +1,10 @@
+{
+  "recommendations": [
+    "streetsidesoftware.code-spell-checker",
+    "editorconfig.editorconfig",
+    "ecmel.vscode-html-css",
+    "esbenp.prettier-vscode",
+    "mike-co.import-sorter",
+    "styled-components.vscode-styled-components"
+  ]
+}
