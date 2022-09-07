@@ -2,7 +2,11 @@ import React from 'react';
 import styled from 'styled-components';
 import Link from 'next/link';
 
-const Logo = (props: {}) => {
+export type LogoProps = {
+  size?: 'normal' | 'large';
+} & React.HTMLAttributes<HTMLAnchorElement>;
+
+const Logo = (props: LogoProps) => {
   return (
     <Link href="/" passHref {...props}>
       <LogoLink>

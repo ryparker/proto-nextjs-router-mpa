@@ -1,14 +1,15 @@
 import React from 'react';
+import { useRouter } from 'next/router';
 import styled, { CSSProperties } from 'styled-components';
 import Link from '@components/Link';
 
-export type NavListProps = {
-  path: string;
-} & React.HTMLAttributes<HTMLElement>;
+export type NavListProps = {} & React.HTMLAttributes<HTMLElement>;
 
 const NavList = (props: NavListProps) => {
-  const { path, ...delegated } = props;
-  const isOnLegislation = path === '/';
+  const { ...delegated } = props;
+  const router = useRouter();
+  const path = router.pathname;
+  const isOnHome = path === '/';
   const isOnElectedOfficials = path.startsWith('/elected-officials');
   return (
     <Wrapper {...delegated}>
@@ -17,23 +18,11 @@ const NavList = (props: NavListProps) => {
           href="/"
           style={
             {
-              '--font-weight': isOnLegislation ? '600' : '400',
+              '--font-weight': isOnHome ? '600' : '400',
             } as CSSProperties
           }
         >
-          Legislation
-        </Link>
-      </NavItem>
-      <NavItem>
-        <Link
-          href="/elected-officials"
-          style={
-            {
-              '--font-weight': isOnElectedOfficials ? '600' : '400',
-            } as CSSProperties
-          }
-        >
-          Elected Officials
+          Home
         </Link>
       </NavItem>
     </Wrapper>

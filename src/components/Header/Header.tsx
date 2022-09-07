@@ -1,98 +1,102 @@
 import React from 'react';
 import styled from 'styled-components';
 import Logo from '@components/Logo';
-import { QUERIES } from '@constants';
-import NavList from '@components/NavList';
 import MaxWidthWrapper from '@components/MaxWidthWrapper';
+import NavList from '@components/NavList';
+import { QUERIES } from '@constants';
 
 export type HeaderProps = {
-  path: string;
   position?: string;
   searchPlaceholder?: string;
 } & React.HTMLAttributes<HTMLDivElement>;
 
 const Header = (props: HeaderProps) => {
-  const { path, position, searchPlaceholder, ...delegated } = props;
+  const { position, searchPlaceholder, children, ...delegated } = props;
+
   return (
     <Wrapper {...delegated}>
       <InnerWrapper>
-        <Logo />
-        <NavMenu>
-          <NavItem>
-            <NavList path={path} />
-          </NavItem>
-        </NavMenu>
+        <Logo className="logo" />
+        <NavList className="nav" />
       </InnerWrapper>
     </Wrapper>
   );
 };
 
 const Wrapper = styled.header`
-  z-index: 2;
+  /* Overlap page content */
+  z-index: 4;
   isolation: isolate;
+  /* position: fixed;
   top: 0;
   left: 0;
-  right: 0;
+  right: 0; */
   width: 100%;
+  box-shadow: var(--shadow-elevation-low);
 `;
 
 const InnerWrapper = styled(MaxWidthWrapper)`
-  position: relative;
-  padding-top: ${20 / 16}rem;
-  padding-bottom: ${20 / 16}rem;
-  min-height: fit-content;
+  width: 100%;
+  padding-top: ${8 / 16}rem;
+  padding-bottom: ${8 / 16}rem;
+  &::-webkit-scrollbar {
+    display: none;
+  }
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+  display: grid;
+  gap: ${16 / 16}rem ${32 / 16}rem;
+  align-items: baseline;
+  justify-items: center;
+  grid-template-areas:
+    'logo'
+    'actions'
+    'nav';
+  .logo {
+    grid-area: logo;
+    justify-self: center;
+  }
+  .nav {
+    grid-area: nav;
+    justify-self: center;
+    overflow-x: auto;
+    &::-webkit-scrollbar {
+      display: none;
+    }
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+    max-width: 100%;
+  }
+  .actions {
+    grid-area: actions;
+    justify-self: center;
+  }
+
+  @media ${QUERIES.laptopAndUp} {
+    grid-template-areas: 'logo nav actions';
+    grid-template-columns: min-content auto min-content;
+    .logo {
+      justify-self: flex-start;
+    }
+    .nav {
+      justify-self: flex-start;
+    }
+    .actions {
+      justify-self: flex-end;
+    }
+  }
+`;
+const Actions = styled.div`
   display: flex;
-  flex-direction: column;
-  justify-content: space-between;
   align-items: center;
-  gap: ${16 / 16}rem;
+  gap: ${32 / 16}rem;
+  justify-content: flex-end;
+  min-height: 30px;
 
-  .stretch {
-    flex-grow: 1;
-  }
-
-  @media ${QUERIES.tabletAndUp} {
-    flex-direction: row;
+  @media ${QUERIES.laptopAndUp} {
+    max-height: unset;
   }
 `;
 
-const NavMenu = styled.ul`
-  --padding: ${16 / 16}rem;
-  margin: 0;
-  margin-top: 14px;
-  list-style: none;
-  padding-left: 0;
-  display: flex;
-  align-items: center;
-  gap: var(--padding);
-  height: fit-content;
-  overflow-x: auto;
-  max-width: 100%;
-
-  @media ${QUERIES.tabletAndUp} {
-    overflow: visible;
-  }
-`;
-
-const NavItem = styled.li`
-  color: var(--color-headline);
-  /* SlabButton will look like crap if nav items wrap */
-  /* TODO: find a better solution to support mobile */
-  white-space: nowrap;
-
-  :not(:first-child) {
-    border-left: 1px solid var(--color-paragraph);
-    padding-left: var(--padding);
-  }
-
-  & > a {
-    color: var(--color-headline);
-
-    text-decoration: none;
-    font-weight: 600;
-  }
-
-  font-size: ${20 / 16}rem;
-`;
-
+Header.displayName = 'Header';
 export default Header;

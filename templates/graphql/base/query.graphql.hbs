@@ -1,0 +1,9 @@
+query {{name}}Query(
+  $limit: Int
+) {
+  {{name}}: {{typename}}(
+    limit: $limit
+  ) {
+    id
+  }
+}

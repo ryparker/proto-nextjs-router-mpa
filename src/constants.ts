@@ -19,8 +19,11 @@ export const QUERIES = {
     (max-width: ${(BREAKPOINTS.laptopMin - 1) / 16}rem)`,
 };
 
-/* Browser */
 export const isBrowser = typeof window !== 'undefined';
+export const IS_PROD = ['production', 'prod'].includes(process.env.NODE_ENV);
+export const IS_DEV = !IS_PROD;
+export const ENABLE_PARTYTOWN_LOGS = IS_DEV;
+export const GTM_ID = process.env.NEXT_PUBLIC_GTM_ID;
 
 /* Environment variables */
 export const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL;

@@ -1,7 +1,7 @@
 import { render, cleanup, waitFor } from '@testing-library/react';
 import { axe } from 'jest-axe';
 import { composeStories } from '@storybook/testing-react';
-import * as stories from './{{name}}.stories';
+import * as stories from './CommonPageLayout.stories';
 
 afterEach(() => {
   cleanup();

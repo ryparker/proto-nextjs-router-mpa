@@ -1,43 +1,42 @@
-import styled from 'styled-components';
-import Button from '@components/Button';
-import Footer from '@components/Footer';
-import Header from '@components/Header';
-import Link from '@components/Link';
+import type { ReactElement } from 'react';
 
-export default function Custom500() {
-  const subText =
-    "Sorry about that. If you have don't mind, please report what happened and I'll fix it.";
+import styled from 'styled-components';
+import AppLayout from '@components/AppLayout';
+import Button from '@components/Button';
+import CommonPageLayout from '@components/CommonPageLayout';
+import Link from '@components/Link';
+import Metadata from '@components/Metadata';
+
+import type { NextPageWithLayout } from './_app';
+
+const path = '/500';
+
+const Custom500: NextPageWithLayout<any> = () => {
   return (
     <Wrapper>
-      <Header path="/500" searchPlaceholder="for the people act…" />
+      <Metadata title="Oops! Something went wrong." path={path} noTrack />
       <Main>
         <Content>
           <Title>500 · Server Error</Title>
-          <Text>{subText}</Text>
+          <Text>
+            Sorry about that. If you don&apos;t mind, please report what
+            happened and I&apos;ll fix it.
+          </Text>
           <Button
             as={Link}
             href="https://github.com/CongressWiki/Roadmap/issues/new"
-            rel="noopener noreferrer"
-            aria-label="Report an issue"
+            rel="external noopener"
+            aria-label="Report an issue on GitHub"
           >
             Report
           </Button>
         </Content>
       </Main>
-      <Footer />
     </Wrapper>
   );
-}
+};
 
-const Wrapper = styled.div`
-  position: relative;
-  min-height: 100%;
-  height: fit-content;
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  justify-content: stretch;
-`;
+const Wrapper = styled.div``;
 const Main = styled.main`
   display: grid;
   place-content: center;
@@ -57,3 +56,13 @@ const Text = styled.p`
   text-align: center;
   font-size: ${18 / 16}rem;
 `;
+
+Custom500.getLayout = function getLayout(page: ReactElement) {
+  return (
+    <AppLayout pageProps={page.props}>
+      <CommonPageLayout>{page}</CommonPageLayout>
+    </AppLayout>
+  );
+};
+
+export default Custom500;

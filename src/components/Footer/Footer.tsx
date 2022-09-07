@@ -7,7 +7,7 @@ export type FooterProps = {} & React.HTMLAttributes<HTMLDivElement>;
 
 const Footer = (props: FooterProps) => {
   const { ...delegated } = props;
-  const iconSize = '24px';
+  const iconSize = `${24 / 16}rem`;
   return (
     <Wrapper {...delegated}>
       <FirstLine>
@@ -22,7 +22,9 @@ const Footer = (props: FooterProps) => {
           hoverFill="var(--color-highlight)"
           id="github"
           color={'var(--color-card-text)'}
-          size={iconSize}
+          iconProps={{
+            size: iconSize,
+          }}
         />
         <IconButton
           label={'Go to Twitter profile'}
@@ -33,7 +35,9 @@ const Footer = (props: FooterProps) => {
           hoverFill="var(--color-highlight)"
           id="twitter"
           color={'var(--color-card-text'}
-          size={iconSize}
+          iconProps={{
+            size: iconSize,
+          }}
         />
       </FirstLine>
       <Copyright>&#169; 2022 all rights are reserved</Copyright>
@@ -59,7 +63,7 @@ const Wrapper = styled.footer`
 const FirstLine = styled.div`
   display: flex;
   align-items: center;
-  gap: ${16 / 16}rem;
+  gap: ${29 / 16}rem;
 `;
 const Separator = styled.span`
   display: block;

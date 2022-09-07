@@ -1,131 +1,186 @@
 import React from 'react';
 import styled, { CSSProperties } from 'styled-components';
-import Tooltip from '@components/Tooltip';
-import VisuallyHidden from '@components/VisuallyHidden';
 import Icon, { IconProps } from '@components/Icon';
+// import Tooltip from '@components/Tooltip';
+import VisuallyHidden from '@components/VisuallyHidden';
 
 import type { TooltipProps } from '@components/Tooltip';
+
 export type IconButtonProps = {
   /**
-   * Icon ID
+   * Id of the icon to use.
    */
   id: IconProps['id'];
-  tip: string;
-  label: string;
-  iconProps?: Omit<IconProps, 'id'>;
-  as?: any;
-  href?: string;
   /**
-   * @default 44px
+   * Tooltip text
+   */
+  tip: string;
+  /**
+   * label read by screen readers
+   */
+  label: string;
+  /**
+   * Size of the button. Apple recommends buttons are at least 44px for touch screen usage.
+   * @default 44/16 rem (44px)
    */
   size?: string;
-  offsetLeft?: string;
-  offsetRight?: string;
-  offsetTop?: string;
-  offsetBottom?: string;
-  tooltipContent?: TooltipProps['tooltipContent'];
-  hoverFill?: string;
+  /**
+   * Style the button's border.
+   */
   border?: boolean;
+  /**
+   * The color of the SVG fill when hovered.
+   *
+   * @default var(--color-gray800)
+   */
+  hoverFill?: string;
+  /**
+   * The color of the background when hovered.
+   *
+   * @default var(--color-gray800)
+   */
+  hoverBackground?: string;
+  /**
+   * The color of the background when clicked.
+   *
+   * @default var(--color-gray900)
+   */
+  activeBackground?: string;
+  /**
+   * Shorthand prop for the icon's size. If size is provided in iconProps this will be overridden.
+   */
+  iconSize?: string;
+  /**
+   * Forwarded props for the Icon component
+   */
+  iconProps?: Omit<IconProps, 'id'>;
+  /**
+   * Forwarded props for the tooltip content
+   */
+  tooltipContent?: TooltipProps['tooltipContent'];
+  as?: any;
+  href?: string;
+  target?: string;
+  rel?: string;
 } & React.HTMLAttributes<HTMLButtonElement>;
 
 const IconButton = React.forwardRef(
   (props: IconButtonProps, ref: React.ForwardedRef<HTMLButtonElement>) => {
     const {
-      children,
+      id,
       tip,
-      as,
-      href,
       label,
       tooltipContent,
       size = `${44 / 16}rem`,
-      offsetLeft,
-      offsetRight,
-      hoverFill,
-      offsetTop,
-      offsetBottom,
-      onClick,
       border,
-      id,
+      hoverFill,
+      hoverBackground,
+      activeBackground,
+      iconSize,
       iconProps,
       ...delegated
     } = props;
     return (
-      <Tooltip tip={tip} tooltipContent={tooltipContent}>
-        <Wrapper
-          ref={ref}
-          as={as}
-          href={href}
-          onClick={onClick}
-          label={label}
-          style={
-            {
-              '--button-wrapper-size': size,
-              '--margin-left': offsetLeft ? offsetLeft : '0',
-              '--margin-right': offsetRight ? offsetRight : '0',
-              '--margin-top': offsetTop ? offsetTop : '0',
-              '--margin-bottom': offsetBottom ? offsetBottom : '0',
-              '--hover-fill': hoverFill || 'revert',
-              '--border': border ? '1px solid var(--color-gray500)' : 'none',
-            } as CSSProperties
-          }
-          {...delegated}
-        >
-          <VisuallyHidden>{label}</VisuallyHidden>
-          <Icon id={id} {...iconProps} />
-        </Wrapper>
-      </Tooltip>
+      // <Tooltip tip={tip} tooltipContent={tooltipContent}>
+      <Button
+        ref={ref}
+        aria-label={label}
+        style={
+          {
+            '--button-size': size,
+            '--icon-size': iconSize || iconProps?.size,
+            '--hover-fill': hoverFill || 'initial',
+            '--border': border ? '1px solid var(--color-gray500)' : 'none',
+            '--hover-background': hoverBackground || 'var(--color-gray800)',
+            '--active-background': activeBackground || 'var(--color-gray900)',
+          } as CSSProperties
+        }
+        {...delegated}
+      >
+        <VisuallyHidden>{label}</VisuallyHidden>
+        <StyledIcon id={id} size={iconSize} {...iconProps} />
+      </Button>
+      // {/* </Tooltip> */}
     );
   }
 );
 
-const Wrapper = styled.button`
-  background-color: transparent;
+const Button = styled.button`
+  display: block;
+  background: none;
   border: none;
   padding: 0;
   cursor: pointer;
-  border-radius: 9999px;
-  border: var(--border);
-  display: grid;
-  place-content: center;
-  width: var(--button-wrapper-size);
-  height: var(--button-wrapper-size);
 
-  /* Offset the padding */
-  margin-left: var(--margin-left);
-  margin-right: var(--margin-right);
-  margin-bottom: var(--margin-bottom);
-  margin-top: var(--margin-top);
-
-  will-change: background-color transform;
-  transition: background-color 600ms, transform 600ms;
   /* Remove button flash on mobile */
   -webkit-tap-highlight-color: transparent;
   /* Disable text highlight when long pressing on mobile */
   user-select: none;
+  isolation: isolate;
 
-  & > * > svg {
-    will-change: fill;
-    transition: fill 500ms ease-out;
-  }
-
-  @media (hover: hover) {
-    &:hover > * > svg {
-      transition: fill 300ms ease-out;
-      fill: var(--hover-fill);
-    }
-    &:hover {
-      transition: background-color 300ms, transform 300ms;
-      background-color: var(--color-gray800);
-      transform: none;
-    }
-    &:active {
-      transition: background-color 300ms, transform 300ms;
-      transform: scale(0.8);
-      background-color: var(--color-gray900);
-    }
-  }
   &:focus-visible {
     outline-offset: -2px;
+  }
+`;
+const StyledIcon = styled(Icon)`
+  --button-diff: calc(var(--button-size) - var(--icon-size));
+  --button-diff-half: calc(var(--button-diff) / 2);
+  --button-diff-half-neg: calc(var(--button-diff-half) * -1);
+  --transition-duration-in: 300ms;
+  --transition-duration-out: 500ms;
+  --transition-style: ease-out;
+  position: relative;
+  z-index: 2;
+
+  &:focus {
+    border-radius: 999px;
+  }
+
+  &:before {
+    z-index: -1;
+    position: absolute;
+    top: var(--button-diff-half-neg);
+    left: var(--button-diff-half-neg);
+    display: block;
+    content: '';
+    height: var(--button-size);
+    width: var(--button-size);
+    border-radius: 999px;
+    background-color: transparent;
+  }
+
+  @media (hover: hover) and (pointer: fine) {
+    will-change: color;
+    transition-property: color;
+    transition-duration: var(--transition-duration-out);
+    transition-timing-function: var(--transition-style);
+    & > svg {
+      will-change: fill;
+      transition-property: fill;
+      transition-duration: var(--transition-duration-out);
+      transition-timing-function: var(--transition-style);
+    }
+    &:before {
+      will-change: background-color, transform;
+      transition-property: background-color, transform;
+      transition-duration: var(--transition-duration-out);
+      transition-timing-function: var(--transition-style);
+    }
+
+    ${Button}:hover & > svg {
+      transition-duration: var(--transition-duration-in);
+      fill: var(--hover-fill);
+    }
+    ${Button}:hover &:before {
+      transition-duration: var(--transition-duration-in);
+      background-color: var(--hover-background);
+      transform: none;
+    }
+    ${Button}:active &:before {
+      transition-duration: var(--transition-duration-in);
+      background-color: var(--active-background);
+      transform: scale(0.8);
+    }
   }
 `;
 

@@ -1,33 +1,31 @@
 import styled from 'styled-components';
-import Footer from '@components/Footer';
-import Header from '@components/Header';
+import AppLayout from '@components/AppLayout';
+import CommonPageLayout from '@components/CommonPageLayout';
+import Metadata from '@components/Metadata';
 
-export default function Custom404() {
-  const subText =
-    "You requested a page that doesn't exist. You might have better luck using the search bar above.";
+import type { ReactElement } from 'react';
+import type { NextPageWithLayout } from './_app';
+
+const path = '/404';
+
+const Custom404: NextPageWithLayout<any> = () => {
   return (
     <Wrapper>
-      <Header path="/404" searchPlaceholder="for the people act…" />
+      <Metadata title="404 Page not found" path={path} noTrack />
       <Main>
         <Content>
           <Title>404 · Page not found</Title>
-          <Text>{subText}</Text>
+          <Text>
+            You requested a page that doesn&apos;t exist. Make sure the URL is
+            correct or try using the search button above.
+          </Text>
         </Content>
       </Main>
-      <Footer />
     </Wrapper>
   );
-}
+};
 
-const Wrapper = styled.div`
-  position: relative;
-  min-height: 100%;
-  height: fit-content;
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  justify-content: stretch;
-`;
+const Wrapper = styled.div``;
 const Main = styled.main`
   display: grid;
   place-content: center;
@@ -47,3 +45,13 @@ const Text = styled.p`
   text-align: center;
   font-size: ${18 / 16}rem;
 `;
+
+Custom404.getLayout = function getLayout(page: ReactElement) {
+  return (
+    <AppLayout pageProps={page.props}>
+      <CommonPageLayout>{page}</CommonPageLayout>
+    </AppLayout>
+  );
+};
+
+export default Custom404;

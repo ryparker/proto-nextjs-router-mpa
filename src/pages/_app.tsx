@@ -1,31 +1,22 @@
+// import '@styles/advocate.css';
+
+import type { ReactElement, ReactNode } from 'react';
+import type { NextPage } from 'next';
 import type { AppProps } from 'next/app';
-import GlobalStyles from '@components/GlobalStyles';
 
-// For Analytics uncomment the following and uncomment the <Script> tags returned below.
-// import Script from 'next/script';
+export type NextPageWithLayout<T> = NextPage<T> & {
+  getLayout?: (page: ReactElement) => ReactNode;
+};
 
-function MyApp({ Component, pageProps }: AppProps) {
-  return (
-    <>
-      {/* @ts-ignore stupid TS thinks global styles isn't a thing. */}
-      <GlobalStyles />
-      {/* Google Analytics
-      <Script
-        src={`https://www.googletagmanager.com/gtag/js?id=${process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS}`}
-        strategy="afterInteractive"
-      />
-      <Script id="google-analytics" strategy="afterInteractive">
-        {`
-          window.dataLayer = window.dataLayer || [];
-          function gtag(){window.dataLayer.push(arguments);}
-          gtag('js', new Date());
+type AppPropsWithLayout<T> = AppProps & {
+  Component: NextPageWithLayout<T>;
+};
 
-          gtag('config', '${process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS}');
-        `}
-      </Script> */}
-      <Component {...pageProps} />
-    </>
-  );
+export default function MyApp({
+  Component,
+  pageProps,
+}: AppPropsWithLayout<any>) {
+  // Use the layout defined at the page level, if available
+  const getLayout = Component.getLayout ?? ((page) => page);
+  return getLayout(<Component {...pageProps} />);
 }
-
-export default MyApp;
