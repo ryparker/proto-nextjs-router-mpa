@@ -6,19 +6,17 @@ import CommonPageLayout from '@components/CommonPageLayout';
 import { ReactElement } from 'react';
 import Toggle from '@components/Toggle';
 import QueryView from '@components/QueryView';
-import useHasMounted from '@hooks/useHasMounted';
 
 export type HomePageProps = {};
 
 function Home() {
-  const hasMounted = useHasMounted();
   return (
     <>
       <MaxWidthWrapper>
         <Main>
           <h1>Make it happen</h1>
-          {hasMounted && <Toggle />}
-          {hasMounted && <QueryView />}
+          <Toggle />
+          <QueryView />
         </Main>
       </MaxWidthWrapper>
     </>

@@ -12,6 +12,7 @@ function Toggle(_props: ToggleProps) {
   const [type, setType] = React.useState<string | undefined>('');
 
   useEffect(() => {
+    console.log(location.search);
     const { type } = router.query;
     setType(type as string);
   }, [router.query]);

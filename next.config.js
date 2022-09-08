@@ -2,8 +2,11 @@
 
 module.exports = {
   reactStrictMode: true,
-  styledComponents: true,
   swcMinify: true,
+  experimental: {
+    runtime: 'nodejs',
+    serverComponents: true,
+  },
   compiler: {
     // Fix for console error: "Prop `className` did not match. Server"
     // https://nextjs.org/docs/advanced-features/compiler#styled-components

@@ -10,16 +10,24 @@ function getCurrentLocation() {
 const listeners: Array<() => void> = [];
 
 /**
- * Notifies all location listeners. Can be used if the history state has been manipulated
- * in by another module. Effectively, all components using the 'useLocation' hook will
- * update.
+ * Notifies all location listeners. Can be used if the history state has been
+ * manipulated in by another module. Effectively, all components using the
+ * 'useLocation' hook will update.
  */
 export function notify() {
   listeners.forEach((listener) => listener());
 }
 
+/**
+ * React Hook for accessing the current location in Next.js without
+ * triggering a full page re-render
+ */
 export default function useLocation() {
-  const [{ pathname, search }, setLocation] = useState(getCurrentLocation());
+  const isWindowAvailable = typeof window !== 'undefined';
+
+  const [location, setLocation] = useState<Record<string, any>>(
+    isWindowAvailable ? getCurrentLocation() : {}
+  );
 
   useEffect(() => {
     window.addEventListener('popstate', handleChange);
@@ -49,7 +57,7 @@ export default function useLocation() {
   return {
     push,
     replace,
-    pathname,
-    search,
+    pathname: location?.pathname || '',
+    search: location?.search || '',
   };
 }

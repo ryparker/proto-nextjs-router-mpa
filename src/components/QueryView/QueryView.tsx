@@ -1,5 +1,4 @@
 import useLocation from '@hooks/useLocation';
-import { useRouter } from 'next/router';
 import React, { useEffect } from 'react';
 import styled, { CSSProperties } from 'styled-components';
 
