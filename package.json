@@ -51,7 +51,7 @@
     "@types/jest-axe": "^3.5.4",
     "@types/lodash": "^4.14.184",
     "@types/node": "^18.7.16",
-    "@types/react": "18.0.18",
+    "@types/react": "18.0.26",
     "@types/styled-components": "^5.1.26",
     "chromatic": "^6.9.0",
     "eslint": "8.23.0",
